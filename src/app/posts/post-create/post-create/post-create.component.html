@@ -1,0 +1,10 @@
+<mat-card>
+    <mat-form-field>
+        <input matInput type="text" [(ngModel)]="postHeader">
+    </mat-form-field>
+
+    <mat-form-field>
+        <textarea matInput rows="10" [(ngModel)]="postContent"></textarea>
+    </mat-form-field>
+    <button mat-raised-button color="accent" class="btn btn-primary" (click)="onAddPost()">Dodaj Post</button>
+</mat-card>
