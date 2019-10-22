@@ -9,6 +9,8 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./post-list.component.css']
 })
 export class PostListComponent implements OnInit, OnDestroy {
+
+
   // posts = [
   //   { title: 'to jest pierwszy tytuł', content: 'to jest zawartość pierwszego posta' },
   //   { title: 'to jest drugi tytuł', content: 'to jest zawartość drugiego posta' },
@@ -19,6 +21,10 @@ export class PostListComponent implements OnInit, OnDestroy {
   private postsSub: Subscription;
   constructor(public postsService: PostsService) { }
 
+  ngOnDestroy(): void {
+    this.postsSub.unsubscribe();
+  }
+
   ngOnInit() {
     this.posts = this.postsService.getPosts();
     this.postsSub = this.postsService.getPostUpdateListener().subscribe((posts) => {
@@ -26,7 +32,5 @@ export class PostListComponent implements OnInit, OnDestroy {
     });
   }
 
-  OnDestroy() {
-    this.postsSub.unsubscribe();
-  }
+
 }
