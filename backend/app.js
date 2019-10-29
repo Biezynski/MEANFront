@@ -22,7 +22,7 @@ app.post('/api/posts', (req, res, next) => {
         message: 'Poprawnie dodano Posta'
     });
 });
-
+//E7FpPnrRCER8dXCl
 app.get('/api/posts', (req, res, next) => {
     const posts = [{
             id: 'fsvxcvrfds1235s21',
