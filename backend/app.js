@@ -1,6 +1,16 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const Post = require('./models/post');
 const app = express();
+const mongoose = require('mongoose');
+
+
+mongoose.connect('mongodb+srv://Wojtek:E7FpPnrRCER8dXCl@cluster0-n9gde.mongodb.net/test?retryWrites=true&w=majority')
+    .then(() => {
+        console.log('Połączono z bazą danych');
+    }).catch(() => {
+        console.log('Nie można było połączyć z bazą danych');
+    })
 
 
 app.use(bodyParser.json());
@@ -15,14 +25,17 @@ app.use((req, res, next) => {
 
 
 app.post('/api/posts', (req, res, next) => {
-    const post = req.body;
+    const post = new Post({
+        title: req.body.title,
+        content: req.body.content
+    });
     console.log(post);
 
     res.status(201).json({
         message: 'Poprawnie dodano Posta'
     });
 });
-//E7FpPnrRCER8dXCl
+
 app.get('/api/posts', (req, res, next) => {
     const posts = [{
             id: 'fsvxcvrfds1235s21',
