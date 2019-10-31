@@ -5,7 +5,7 @@ const app = express();
 const mongoose = require('mongoose');
 
 
-mongoose.connect('mongodb+srv://Wojtek:E7FpPnrRCER8dXCl@cluster0-n9gde.mongodb.net/test?retryWrites=true&w=majority')
+mongoose.connect('mongodb+srv://Wojtek:E7FpPnrRCER8dXCl@cluster0-n9gde.mongodb.net/node-angular?retryWrites=true&w=majority')
     .then(() => {
         console.log('Połączono z bazą danych');
     }).catch(() => {
@@ -29,7 +29,7 @@ app.post('/api/posts', (req, res, next) => {
         title: req.body.title,
         content: req.body.content
     });
-    console.log(post);
+    post.save();
 
     res.status(201).json({
         message: 'Poprawnie dodano Posta'
@@ -37,29 +37,20 @@ app.post('/api/posts', (req, res, next) => {
 });
 
 app.get('/api/posts', (req, res, next) => {
-    const posts = [{
-            id: 'fsvxcvrfds1235s21',
-            title: 'tytuł pierwszego posta z servera',
-            content: 'ciało pierwszego posta z servera',
-        },
-        {
-            id: 'asdsax256v3xs45',
-            title: 'tytuł drugiego posta z servera',
-            content: 'ciało drugiego posta z servera',
-        },
-        {
-            id: '123zefrdascvrf235sa',
-            title: 'tytuł trzeciego posta z servera',
-            content: 'ciało trzeciego posta z servera',
-        }
-
-    ]
-
-    res.status(200).json({
-        message: 'Poprawnie pobrano posty!',
-        posts: posts
-
-    });
+    Post.find()
+        .then((documents) => {
+            res.status(200).json({
+                message: 'Poprawnie pobrano posty!',
+                posts: documents
+            });
+        })
 })
+
+app.delete("/api/posts/:id", (req, res, next) => {
+    Post.deleteOne({ _id: req.params.id }).then(result => {
+        console.log(result);
+        res.status(200).json({ message: "Post deleted!" });
+    });
+});
 
 module.exports = app;
