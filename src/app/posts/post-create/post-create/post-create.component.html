@@ -1,12 +1,12 @@
 <mat-card>
-    <form (submit)="onAddPost(postForm)" #postForm="ngForm">
+    <form (submit)="onSavePost(postForm)" #postForm="ngForm">
         <mat-form-field>
-            <input matInput type="text" ngModel placeholder="Tytuł Posta" required name="title" #title="ngModel">
+            <input matInput type="text" [ngModel]='post?.title' placeholder="Tytuł Posta" required name="title" #title="ngModel">
             <mat-error *ngIf="title.invalid">Tytul nie może być pusty </mat-error>
         </mat-form-field>
 
         <mat-form-field>
-            <textarea matInput rows="10" ngModel placeholder="Post" required name="content" #content="ngModel"></textarea>
+            <textarea matInput rows="10" [ngModel]='post?.content' placeholder="Post" required name="content" #content="ngModel"></textarea>
             <mat-error *ngIf="content.invalid">Post nie może być pusty</mat-error>
         </mat-form-field>
         <button mat-raised-button color="accent" class="btn btn-primary" type="submit">Dodaj Post</button>
